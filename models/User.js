@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-// Create Schema
 const UserSchema = new Schema({
   name: {
     type: String,
@@ -18,7 +17,7 @@ const UserSchema = new Schema({
   avatar: {
     type: String
   },
-  date: {
+  data: {
     type: Date,
     default: Date.now
   }
