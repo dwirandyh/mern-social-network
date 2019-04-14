@@ -1,6 +1,9 @@
 import React, { Component } from "react";
-import axios from "axios";
+import PropTypes from "prop-types";
+import { withRouter } from "react-router-dom";
 import classnames from "classnames";
+import { connect } from "react-redux";
+import { registerUser } from "../../actions/authActions";
 
 class Register extends Component {
   constructor() {
@@ -17,6 +20,12 @@ class Register extends Component {
     this.onSubmit = this.onSubmit.bind(this);
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.errors) {
+      this.setState({ errors: nextProps.errors });
+    }
+  }
+
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
@@ -31,10 +40,7 @@ class Register extends Component {
       password2: this.state.password2
     };
 
-    axios
-      .post("/api/users/register", newUser)
-      .then(res => console.log(res.data))
-      .catch(err => this.setState({ errors: err.response.data }));
+    this.props.registerUser(newUser, this.props.history);
   }
 
   render() {
@@ -80,11 +86,11 @@ class Register extends Component {
                     onChange={this.onChange}
                   />
                   {errors.email && (
-                    <div className="invalid-feedback">{errors.name}</div>
+                    <div className="invalid-feedback">{errors.email}</div>
                   )}
                   <small className="form-text text-muted">
-                    This site uses Gravatar so if you want a profile image, use
-                    a Gravatar email
+                    Thisss site uses Gravatar so if you want a profile image,
+                    use a Gravatar email
                   </small>
                 </div>
                 <div className="form-group">
@@ -127,4 +133,18 @@ class Register extends Component {
   }
 }
 
-export default Register;
+Register.propTypes = {
+  registerUser: PropTypes.func.isRequired,
+  auth: PropTypes.object.isRequired,
+  errors: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth, // state.auth (auth is from reducers/index.js)
+  errors: state.errors
+});
+
+export default connect(
+  mapStateToProps,
+  { registerUser }
+)(withRouter(Register));
