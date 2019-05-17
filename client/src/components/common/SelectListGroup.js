@@ -2,7 +2,7 @@ import React from "react";
 import classnames from "classnames";
 import PropTypes from "prop-types";
 
-const SelectListGroup = ({ name, error, info, onChange, options }) => {
+const SelectListGroup = ({ name, error, info, value, onChange, options }) => {
   const selectOptions = options.map(option => (
     <option key={option.label} value={option.value}>
       {option.label}
@@ -15,6 +15,7 @@ const SelectListGroup = ({ name, error, info, onChange, options }) => {
           "is-invalid": error
         })}
         name={name}
+        value={value}
         onChange={onChange}
       >
         {selectOptions}
