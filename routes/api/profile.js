@@ -76,6 +76,7 @@ router.post(
     if (status) profileFields.status = status;
     if (githubusername) profileFields.githubusername = githubusername;
     if (skills) {
+      console.log(skills);
       profileFields.skills = skills.split(",").map(skill => skill.trim());
     }
 
@@ -107,7 +108,7 @@ router.post(
       res.json(profile);
     } catch (err) {
       console.error(err.message);
-      res.status(500).send("Server Error");
+      res.status(500).send(err.message);
     }
   }
 );
@@ -157,6 +158,8 @@ router.delete("/", auth, async (req, res) => {
     await Profile.findOneAndRemove({ user: req.user.id });
     // Remove user
     await User.findOneAndRemove({ _id: req.user.id });
+
+    res.json({ msg: "User deleted" });
   } catch (err) {
     console.error(err.message);
     res.status(500).send("Server Error");
@@ -315,7 +318,7 @@ router.delete("/education/:edu_id", auth, async (req, res) => {
     // get remove index
     const removeIndex = profile.education
       .map(item => item.id)
-      .indexOf(req.param.edu_id);
+      .indexOf(req.params.edu_id);
 
     profile.education.splice(removeIndex, 1);
 
