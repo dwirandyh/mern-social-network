@@ -16,7 +16,7 @@ app.use("/api/posts", require("./routes/api/posts"));
 app.use("/api/auth/", require("./routes/api/auth"));
 
 // Server statis assets in production (react build)
-if (process.eventNames.NODE_ENV === "production") {
+if (process.env.NODE_ENV === "production") {
   // Set static folder
   app.use(express.static("client/build"));
 
