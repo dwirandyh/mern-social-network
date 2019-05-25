@@ -1,0 +1,6 @@
+{
+  "mongoURI": "mongodb+srv://admin:admin123@mernsocialnetwork-ym4nc.mongodb.net/test?retryWrites=true",
+  "jwtSecret": "secret",
+  "githubClientId": "bc5fa738c0dc628a98ee",
+  "githubSecret": "4e5bd4703e578052e5961ce4266180f4c200e215"
+}
